@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <form id="miForm" action="" method="GET">
+        <fieldset style="width: 280px;">
+            <legend>Datos personales</legend>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td><label for="nombre"> Nombre :</label> <!-- atr for relaciona label con input --></td>
+                            <td><input type="text" id="nombre" name="nombre" placeholder="Ingrese nombre">  </td>
+                        </tr>
+                        <tr>
+                            <td><label for="apellido"> Apellido :</label></td>
+                            <td><input type="text" id="apellido" name="apellido" placeholder="Ingrese apellido"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="dniType">Documento:</label></td>
+                            <td><select name="dniType" id="dniType">
+                                <optgroup label="----">
+                                    <option value="1">DNI</option>
+                                    <option value="2">LC</option>
+                                    <option value="3">LI</option>
+                                </optgroup>
+                            </select>
+                            <input type="text" style="width: 100px;" pattern="{^\d}"></td>
+                        </tr>
+                        <tr>
+                            <td><label>Sexo: </label></td>
+                            <td><input type="radio" name="sex" id="male"> M
+                            <input type="radio" name="sex" id="female"> F</td>
+                        </tr>
+                        <tr>
+                            <td><label for="nacionalidad">Nacionalidad: </label></td>
+                            <td><input list="nacionalidad" name="nacionalidad" style="width: 100px;">
+                                <datalist id="nacionalidad">
+                                    <option value="ARG">Argentina</option>
+                                    <option value="COL">Colombia</option>
+                                    <option value="BRA">Brasil</option>
+                                    <option value="URU">Uruguay</option>
+                                </datalist></td>
+                        </tr>
+                        <tr>
+                            <td><label>Intereses: </label></td>
+                            <td><input type="checkbox" name="interes" value="1">Arte<input type="checkbox" name="interes" value="2">Cine<input type="checkbox" name="interes" value="3">Deporte</td>
+                        </tr>
+                        <tr>
+                            <td><input type="submit"></td>
+                            <td><input type="reset"></td>
+                        </tr>
+                    </tbody>
+                </table>                      
+        </fieldset>
+    </form>   
+</body>
+</html>
