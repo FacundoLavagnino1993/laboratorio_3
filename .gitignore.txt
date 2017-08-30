@@ -1,3 +1,2 @@
 ### videos ###
-*.mp4
-*.webm
+laboratorio_3/clase 29-8/video
