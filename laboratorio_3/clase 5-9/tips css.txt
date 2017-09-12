@@ -1,0 +1,33 @@
+<ul>
+	<li> href"a" Inicio/a </li>
+	<li> href"a" Inicio/a </li>
+	<li> href"a" Inicio/a </li>
+</ul>
+
+herencia de estilos, "a todo li dentro de un ul"
+
+ul li{
+
+	display: inline;
+
+}
+
+herencia de estilos, "a todo a dentro de un li dentro de un ul"
+
+ul li a{
+	
+	texto sin decoracion, sin subrayado por ejemplo
+	text-decoration: none;
+
+	el dibujo que aparece en el cursor al pasarlo sobre algo
+	cursor: crosshair;
+
+}
+
+"lo que pasa en el evento hover"
+ul li a:hover{
+	
+	background-color: red;
+	color: white;
+
+}

@@ -1,0 +1,63 @@
+/* * es elselector universal que aplica a todos los
+ elementos */
+*{  
+    /* permite que los bordes del contenedor no se abreguen
+    hacia afuera */
+    box-sizing: border-box; 
+
+
+}
+
+h1{
+    background-color: blue;
+    width: 600px;
+    /* width y height alto y ancho */
+    /* height: 600px; */
+
+    /* margin establece un margen en los elementos
+    hacia afuera del borde, tiene las misma reglas
+    que borde */
+    margin: 10px;
+    
+    /* primer valor top, 2 right, 3bottom, 4 left */
+    /* border: 50px 20px 50px 20px; */
+    /* aplica el mismo borde a los 4 lados */
+    border: 600px;
+    /* aplica un tamaño en top y bottom y otro en left y right */
+    /* border: 40px 60px; */
+    /* color del borde */
+    border-color: black;
+    /* padding establece propiedades en cuanto al margen
+    que existe entre el texto de un elemento con su contenedor */
+    padding: 10px;
+
+}
+
+p{
+    background-color: red;
+}
+
+span{
+    background-color: violet;
+}
+
+/* aplico a varios elementos las mismas propiedades */
+#div1,#div3{
+    width: 600px;
+    height: 300px;
+    margin: 0 auto;
+    border: 10px dotted yellow;
+    background-color: grey;
+    float: right;
+}
+
+#div2{
+    width: 600px;
+    height: 300px;
+    margin: 0 auto;
+    border: 10px dotted yellow;
+    background-color: grey;
+    float: left;
+    position: relative;
+    top: 20px;
+}
