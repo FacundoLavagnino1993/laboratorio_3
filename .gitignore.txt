@@ -1,2 +1,1 @@
-### videos ###
-laboratorio_3/clase 29-8/video
+laboratorio_3/.vscode/
