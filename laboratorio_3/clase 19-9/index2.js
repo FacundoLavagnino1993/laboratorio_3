@@ -4,7 +4,6 @@ window.onload = function(){
     document.getElementById('enviar').addEventListener('click',()=>{
         var nombre = document.getElementById('nombre').value;
         var edad = document.getElementById('edad').value;
-        console.log(nombre + edad);
         xhr.onreadystatechange = gestionarRespuesta;
         xhr.open('GET','./pagina1.php?nombre='+nombre+'&edad='+edad, true);
         xhr.send();
