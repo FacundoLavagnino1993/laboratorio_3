@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div style="background-color:gray;border:black 2px dotted;width:300px;">
+        <div>
+            <label>Nombre:</label><br>
+            <input type="text" id="nombre" name="nombre">
+        </div>
+        <div>
+            <label>Apellido:</label><br>
+            <input type="text" id="apellido" name="apellido">
+        </div>
+        <div>
+            <button type="button" id="agregar">Agregar</button>
+        </div>
+    </div>
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <td>Nombre</td>
+                    <td>Apellido</td>
+                    <td>Action</td>
+                </tr>
+            </thead>
+            <tbody id="personas">
+                
+            </tbody>
+        </table>
+    </div>
+   <script src="./js/index.js"></script> 
+
+</body>
+</html>
