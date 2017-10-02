@@ -24,7 +24,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 
 app.post('/agregarpersona', function (req, res) {
-    console.log("#####"+req.body.nombre);
     var nombre=req.body.nombre;
     var apellido=req.body.apellido;
 
