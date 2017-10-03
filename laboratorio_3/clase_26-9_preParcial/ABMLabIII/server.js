@@ -44,6 +44,7 @@ app.post('/agregarpersona', function (req, res) {
 
 app.post('/eliminarpersona', function (req, res) {
     var indice=req.body.indice;
+    console.log(req.body.indice);
         Personas.splice(indice, 1);   
     
 
