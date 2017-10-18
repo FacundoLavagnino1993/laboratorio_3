@@ -24,7 +24,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 
 app.post('/agregarpersona', function (req, res) {
-    console.log("#####"+req.body.nombre);
     var nombre=req.body.nombre;
     var apellido=req.body.apellido;
 
@@ -45,6 +44,7 @@ app.post('/agregarpersona', function (req, res) {
 
 app.post('/eliminarpersona', function (req, res) {
     var indice=req.body.indice;
+    console.log(req.body.indice);
         Personas.splice(indice, 1);   
     
 
