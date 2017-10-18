@@ -1,1 +1,0 @@
-laboratorio_3/.vscode/
