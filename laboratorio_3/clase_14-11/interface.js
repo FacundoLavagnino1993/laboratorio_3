@@ -32,5 +32,9 @@ enumerado tipo(perro, gato, reptil, roedor, ave, pez)
 ****************
 usar $filter $map $reduce
 
+$filter, un select que filtre segun el tipo elegido
+boton que cargue en textbox el promedio de las edades de las mascotas filtradas por tipo
+agregar checkbox por cada columna de la tabla, que al seleccionar muestre/oculte el campo seleccionado
+
  Archivos separados app.ts animal.ts mascota.ts enum.ts
 */
