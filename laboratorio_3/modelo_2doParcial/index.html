@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="built/app.js"></script>
+    <script src="built/script/mascotas.js"></script>
+    <script src="built/script/animales.js"></script>
+</head>
+<body>
+    <div>
+        <h1>Central de animales</h1>
+    </div>
+    <div>
+        <h3>Agregar animal</h3>
+        <label>Nombre</label>
+        <input type="text" id="nombre">
+        <label>Edad</label>
+        <input type="number" id="edad">
+        <label>Cantidad de patas</label>
+        <select>
+            <optgroup>
+                <option>2</option>
+                <option>4</option>
+            </optgroup>
+        </select>
+        <label>Tipo</label>
+        <select>
+            <optgroup>
+                <option>perro</option>
+                <option>gato</option>
+                <option>reptil</option>
+                <option>roedor</option>
+                <option>ave</option>
+                <option>pez</option>
+            </optgroup>
+        </select>
+    </div>
+    <div>
+        <button>Agregar</button>
+        <button>Modificar</button>
+    </div>
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nombre</th>
+                    <th>Edad</th>
+                    <th>Patas</th>
+                    <th>tipo</th>
+                </tr>
+            </thead>
+            <tbody id="animals">
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
