@@ -25,7 +25,7 @@ atributo cantidad de patas
 Clase mascota hereda de animal
 atributo id
 enumerado tipo(perro, gato, reptil, roedor, ave, pez)
- ******
+******
 
  Ambas entidades tienen metodo toJson, devulve string en formato Json de esa clase
 

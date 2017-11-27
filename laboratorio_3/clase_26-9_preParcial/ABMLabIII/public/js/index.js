@@ -61,9 +61,9 @@ function borrar(index){
 }
 
 function modificar(index){
-    getPersona(index);
-    
+    getPersona(index);   
 }
+
 
 function getPersona(index){
     var persona;

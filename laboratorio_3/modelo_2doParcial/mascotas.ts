@@ -8,6 +8,7 @@ namespace clases {
             this._id = id;
             this._tipo = tipo;
         };
+
     }    
 }
 
