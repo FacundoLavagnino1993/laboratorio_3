@@ -7,6 +7,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="./main.css" rel="stylesheet">
+    <script src="./node_modules/jquery/dist/jquery.min.js"></script>
     <script src="index.js"></script>
 </head>
 <body>
@@ -21,26 +22,25 @@
                 <label>Edad</label>
                 <input type="number" id="edad" class="form-control middle">
                 <label>Tipo</label>
-                <select>
+                <select id="tipoMascota">
                     <optgroup>
-                        <option>perro</option>
-                        <option>gato</option>
-                        <option>reptil</option>
-                        <option>roedor</option>
-                        <option>ave</option>
-                        <option>pez</option>
+                        <option value="0">perro</option>
+                        <option value="1">gato</option>
+                        <option value="2">reptil</option>
+                        <option value="3">roedor</option>
+                        <option value="4">ave</option>
+                        <option value="5">pez</option>
                     </optgroup>
                 </select>
                 <label>Cantidad de patas</label>
-                <select>
+                <select id="patas">
                     <optgroup>
                         <option>2</option>
                         <option>4</option>
                     </optgroup>
                 </select>
-                
-                <button type="button" id="agregar">Agregar</button>
-                <button type="button" id="modificar">Modificar</button>
+                <button type="button" id="btn-add" onclick="index.agregar()">Agregar</button>
+                <button type="button" id="btn-mod" onclick="index.update()">Modificar</button>
             </div>
         </form>
         <div class="box-ctn table-ctn">
@@ -52,6 +52,7 @@
                         <th>Edad</th>
                         <th>Patas</th>
                         <th>tipo</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody id="animales">
