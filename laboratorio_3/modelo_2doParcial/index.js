@@ -61,15 +61,15 @@ class index {
         data = JSON.parse(mascotaStorage.getItem('mascotas') || '[]');
         $("#animales").html('');
         data.forEach(function (item, indice) {
-            document.getElementById('animales').innerHTML += '<tr><td>' + item._id + '</td><td>' + item._nombre + '</td><td>' + item._edad + '</td><td>' + item._cantidad_patas + '</td><td>' + tipos[item._tipo] + '</td><td><button type="button" class="borrar" onclick="index.borrar(' + indice + ')">Borrar</button><button id="modificar" type="button" onclick="index.modificar(' + indice + ')">Modificar</button></td></tr>';
+            document.getElementById('animales').innerHTML += '<tr><td class="item_id">' + item._id + '</td><td class="item_nombre">' + item._nombre + '</td><td class="item_edad">' + item._edad + '</td><td class="item_patas">' + item._cantidad_patas + '</td><td class="item_tipo">' + tipos[item._tipo] + '</td><td class="item_acciones"><button type="button" class="borrar btn btn-danger" onclick="index.borrar(' + indice + ')">Borrar</button><button id="modificar" type="button" class="btn btn-danger" onclick="index.modificar(' + indice + ')">Modificar</button></td></tr>';
         }, this);
     }
     static agregar() {
+        let id = Number($("#id").val());
         let nombre = String($("#nombre").val());
         let edad = Number($("#edad").val());
         let tipo = ($("#tipoMascota").val());
         let cantidad_patas = Number($("#patas").val());
-        let id = Number(mascotas.length + 1);
         let add_mascota = new clases.mascota(nombre, edad, cantidad_patas, id, tipo);
         mascotas.push(add_mascota);
         mascotaStorage.setItem('mascotas', JSON.stringify(mascotas));
@@ -83,39 +83,61 @@ class index {
     }
     ;
     static modificar(indice) {
-        let mascota_modificable = mascotas.filter((mascota) => {
-            if (mascota._id == (indice + 1)) {
-                id_update = mascota._id;
-                String($("#nombre").val(mascota._nombre));
-                Number($("#edad").val(mascota._edad));
-                ($("#tipoMascota").val(mascota._tipo));
-                Number($("#patas").val(mascota._cantidad_patas));
+        id_update = indice;
+        for (let i = 0; i < mascotas.length; i++) {
+            if (i == indice) {
+                String($("#nombre").val(mascotas[i]._nombre));
+                Number($("#id").val(mascotas[i]._id));
+                Number($("#edad").val(mascotas[i]._edad));
+                ($("#tipoMascota").val(mascotas[i]._tipo));
+                Number($("#patas").val(mascotas[i]._cantidad_patas));
             }
-        });
+        }
         document.getElementById("btn-add").style.display = "none";
         document.getElementById("btn-mod").style.display = "initial";
     }
     ;
     static update() {
         let nombre = String($("#nombre").val());
+        let id = Number($("#id").val());
         let edad = Number($("#edad").val());
         let tipo = ($("#tipoMascota").val());
         let cantidad_patas = Number($("#patas").val());
-        let mascota_update = new clases.mascota(nombre, edad, cantidad_patas, id_update, tipo);
-        /*mascotas = mascotas.filter((mascota)=>{
-            if(mascota._id == id_update){
-                mascota._nombre = nombre;
-                mascota._edad = edad;
-                mascota._tipo = tipo;
-                mascota._cantidad_patas = cantidad_patas;
-                
+        for (let i = 0; i < mascotas.length; i++) {
+            if (i == id_update) {
+                mascotas[i]._id = id;
+                mascotas[i]._nombre = nombre;
+                mascotas[i]._edad = edad;
+                mascotas[i]._tipo = tipo;
+                mascotas[i]._cantidad_patas = cantidad_patas;
             }
-        });*/
-        mascotas = mascotas.splice(id_update, 0, mascota_update);
+        }
+        mascotaStorage.clear();
         document.getElementById("btn-mod").style.display = "none";
         document.getElementById("btn-add").style.display = "initial";
-        console.log(mascotas);
         mascotaStorage.setItem('mascotas', JSON.stringify(mascotas));
         index.renderTable();
+    }
+    static filtrar() {
+        //console.log($("#filtroMascota").val());
+        let value = Number($("#filtroMascota").val());
+        let mascotas_filtradas = mascotas.filter((item) => {
+            if (value == 6) {
+                return mascotas;
+            }
+            else if (item._tipo == value && value < 6) {
+                return item;
+            }
+        });
+        $("#animales").html('');
+        console.log(mascotas_filtradas);
+        if (mascotas_filtradas.length > 0) {
+            mascotas_filtradas.forEach(function (item, indice) {
+                document.getElementById('animales').innerHTML += '<tr><td class="item_id">' + item._id + '</td><td class="item_nombre">' + item._nombre + '</td><td class="item_edad">' + item._edad + '</td><td class="item_patas">' + item._cantidad_patas + '</td><td class="item_tipo">' + tipos[item._tipo] + '</td><td class="item_acciones"><button type="button" class="borrar btn btn-danger" onclick="index.borrar(' + indice + ')">Borrar</button><button id="modificar" class="btn btn-danger" type="button" onclick="index.modificar(' + indice + ')">Modificar</button></td></tr>';
+            }, this);
+        }
+        else {
+            document.getElementById('animales').innerHTML += '<div class="col-lg-12 col-md-12 not-found"><p>No hubo coincidencia!</p><img src="sad_icon.png" alt="not found"></div>';
+        }
     }
 }
