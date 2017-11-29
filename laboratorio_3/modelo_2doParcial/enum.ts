@@ -1,11 +1,11 @@
 namespace clases{
-    export enum tipo{
-        perro,
-        gato,
-        reptil,
-        roedor,
-        ave,
-        pez
+    export enum puesto{
+        desarrollador_front,
+        desarrollador_back,
+        analista,
+        QA,
+        team,
+        diseñador
     }
 }
 

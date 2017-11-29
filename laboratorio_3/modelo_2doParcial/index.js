@@ -1,96 +1,111 @@
 var clases;
 (function (clases) {
-    class animal {
-        constructor(nombre, edad, cantidad_patas) {
+    class persona {
+        constructor(nombre, edad, dni) {
             this._nombre = nombre;
             this._edad = edad;
-            this._cantidad_patas = cantidad_patas;
+            this._dni = dni;
         }
     }
-    clases.animal = animal;
+    clases.persona = persona;
 })(clases || (clases = {}));
 var clases;
 (function (clases) {
-    class mascota extends clases.animal {
-        constructor(nombre, edad, cantidad_patas, id, tipo) {
-            super(nombre, edad, cantidad_patas);
+    class empleado extends clases.persona {
+        constructor(nombre, edad, dni, id, puesto) {
+            super(nombre, edad, dni);
             this._id = id;
-            this._tipo = tipo;
+            this._puesto = puesto;
         }
         ;
     }
-    clases.mascota = mascota;
+    clases.empleado = empleado;
 })(clases || (clases = {}));
 var clases;
 (function (clases) {
-    let tipo;
-    (function (tipo) {
-        tipo[tipo["perro"] = 0] = "perro";
-        tipo[tipo["gato"] = 1] = "gato";
-        tipo[tipo["reptil"] = 2] = "reptil";
-        tipo[tipo["roedor"] = 3] = "roedor";
-        tipo[tipo["ave"] = 4] = "ave";
-        tipo[tipo["pez"] = 5] = "pez";
-    })(tipo = clases.tipo || (clases.tipo = {}));
+    let puesto;
+    (function (puesto) {
+        puesto[puesto["desarrollador_front"] = 0] = "desarrollador_front";
+        puesto[puesto["desarrollador_back"] = 1] = "desarrollador_back";
+        puesto[puesto["analista"] = 2] = "analista";
+        puesto[puesto["QA"] = 3] = "QA";
+        puesto[puesto["team"] = 4] = "team";
+        puesto[puesto["dise\u00F1ador"] = 5] = "dise\u00F1ador";
+    })(puesto = clases.puesto || (clases.puesto = {}));
 })(clases || (clases = {}));
-/// <reference path="animales.ts"/>
-/// <reference path="mascotas.ts"/>
+/// <reference path="personas.ts"/>
+/// <reference path="empleados.ts"/>
 /// <reference path="enum.ts"/>
 $(document).ready(function () {
-    index.onInit();
-    index.renderTable();
+    //index.onInit();
+    // index.renderTable();
+    $(function () {
+        $('#file-input').change(function (e) {
+            addImage(e);
+        });
+        function addImage(e) {
+            var file = e.target.files[0], imageType = /image.*/;
+            if (!file.type.match(imageType))
+                return;
+            var reader = new FileReader();
+            reader.onload = fileOnload;
+            reader.readAsDataURL(file);
+        }
+        function fileOnload(e) {
+            var result = e.target.result;
+            $('#imgSalida').attr("src", result);
+        }
+    });
     document.getElementById("btn-mod").style.display = "none";
 });
-let mascotaStorage = localStorage;
-let mascotas = new Array();
-let mascota_1 = new clases.mascota("pinki", 3, 4, 1, clases.tipo.perro);
-let mascota_2 = new clases.mascota("ulises", 2, 4, 2, clases.tipo.gato);
-let mascota_3 = new clases.mascota("george", 3, 2, 3, clases.tipo.ave);
+let empleadoStorage = localStorage;
+let empleados = new Array();
 let data = [];
-let tipos = clases.tipo;
+let puestos = clases.puesto;
 let id_update;
 class index {
     static onInit() {
-        mascotas.push(mascota_1);
-        mascotas.push(mascota_2);
-        mascotas.push(mascota_3);
-        mascotaStorage.setItem('mascotas', JSON.stringify(mascotas));
-        data = JSON.parse(mascotaStorage.getItem('mascotas') || '[]');
+        empleadoStorage.setItem('empleados', JSON.stringify(empleados));
+        data = JSON.parse(empleadoStorage.getItem('empleados') || '[]');
     }
     static renderTable() {
-        data = JSON.parse(mascotaStorage.getItem('mascotas') || '[]');
-        $("#animales").html('');
+        data = JSON.parse(empleadoStorage.getItem('empleados') || '[]');
+        $("#personas").html('');
         data.forEach(function (item, indice) {
-            document.getElementById('animales').innerHTML += '<tr><td class="item_id">' + item._id + '</td><td class="item_nombre">' + item._nombre + '</td><td class="item_edad">' + item._edad + '</td><td class="item_patas">' + item._cantidad_patas + '</td><td class="item_tipo">' + tipos[item._tipo] + '</td><td class="item_acciones"><button type="button" class="borrar btn btn-danger" onclick="index.borrar(' + indice + ')">Borrar</button><button id="modificar" type="button" class="btn btn-danger" onclick="index.modificar(' + indice + ')">Modificar</button></td></tr>';
+            document.getElementById('personas').innerHTML += '<tr><td><img id="imgSalida" width="25%" height="25%" src="" /></td><td class="item_id">' + item._id + '</td><td class="item_nombre">' + item._nombre + '</td><td class="item_edad">' + item._edad + '</td><td class="item_dni">' + item._dni + '</td><td class="item_tipo">' + puestos[item._puesto] + '</td><td class="item_acciones"><button type="button" class="borrar btn btn-danger" onclick="index.borrar(' + indice + ')">Borrar</button><button id="modificar" type="button" class="btn btn-danger" onclick="index.modificar(' + indice + ')">Modificar</button></td></tr>';
         }, this);
     }
     static agregar() {
         let id = Number($("#id").val());
         let nombre = String($("#nombre").val());
         let edad = Number($("#edad").val());
-        let tipo = ($("#tipoMascota").val());
-        let cantidad_patas = Number($("#patas").val());
-        let add_mascota = new clases.mascota(nombre, edad, cantidad_patas, id, tipo);
-        mascotas.push(add_mascota);
-        mascotaStorage.setItem('mascotas', JSON.stringify(mascotas));
+        let puesto = ($("#puestoEmpleado").val());
+        let dni = Number($("#dni").val());
+        let add_empleado = new clases.empleado(nombre, edad, dni, id, puesto);
+        empleados.push(add_empleado);
+        empleadoStorage.setItem('empleados', JSON.stringify(empleados));
         index.renderTable();
     }
     ;
     static borrar(indice) {
-        mascotas.splice(indice, 1);
-        mascotaStorage.setItem('mascotas', JSON.stringify(mascotas));
+        $("#filtroEmpleado").val(6);
+        $("#promedios").val('');
+        empleados.splice(indice, 1);
+        empleadoStorage.setItem('empleados', JSON.stringify(empleados));
         index.renderTable();
     }
     ;
     static modificar(indice) {
+        $("#filtroEmpleado").val(6);
+        $("#promedios").val('');
         id_update = indice;
-        for (let i = 0; i < mascotas.length; i++) {
+        for (let i = 0; i < empleados.length; i++) {
             if (i == indice) {
-                String($("#nombre").val(mascotas[i]._nombre));
-                Number($("#id").val(mascotas[i]._id));
-                Number($("#edad").val(mascotas[i]._edad));
-                ($("#tipoMascota").val(mascotas[i]._tipo));
-                Number($("#patas").val(mascotas[i]._cantidad_patas));
+                String($("#nombre").val(empleados[i]._nombre));
+                Number($("#id").val(empleados[i]._id));
+                Number($("#edad").val(empleados[i]._edad));
+                ($("#puestoEmpleado").val(empleados[i]._puesto));
+                Number($("#dni").val(empleados[i]._dni));
             }
         }
         document.getElementById("btn-add").style.display = "none";
@@ -101,43 +116,111 @@ class index {
         let nombre = String($("#nombre").val());
         let id = Number($("#id").val());
         let edad = Number($("#edad").val());
-        let tipo = ($("#tipoMascota").val());
-        let cantidad_patas = Number($("#patas").val());
-        for (let i = 0; i < mascotas.length; i++) {
+        let puesto = ($("#puestoEmpleado").val());
+        let dni = Number($("#dni").val());
+        for (let i = 0; i < empleados.length; i++) {
             if (i == id_update) {
-                mascotas[i]._id = id;
-                mascotas[i]._nombre = nombre;
-                mascotas[i]._edad = edad;
-                mascotas[i]._tipo = tipo;
-                mascotas[i]._cantidad_patas = cantidad_patas;
+                empleados[i]._id = id;
+                empleados[i]._nombre = nombre;
+                empleados[i]._edad = edad;
+                empleados[i]._puesto = puesto;
+                empleados[i]._dni = dni;
             }
         }
-        mascotaStorage.clear();
+        empleadoStorage.clear();
         document.getElementById("btn-mod").style.display = "none";
         document.getElementById("btn-add").style.display = "initial";
-        mascotaStorage.setItem('mascotas', JSON.stringify(mascotas));
+        empleadoStorage.setItem('empleados', JSON.stringify(empleados));
         index.renderTable();
     }
     static filtrar() {
-        //console.log($("#filtroMascota").val());
-        let value = Number($("#filtroMascota").val());
-        let mascotas_filtradas = mascotas.filter((item) => {
+        $("#promedios").val('');
+        let acum_promedio = 0;
+        let cant_item = 0;
+        let value = Number($("#filtroEmpleado").val());
+        let empleados_filtradas = empleados.filter((item) => {
             if (value == 6) {
-                return mascotas;
+                return empleados;
             }
-            else if (item._tipo == value && value < 6) {
+            else if (item._puesto == value) {
+                acum_promedio += item._edad;
+                cant_item++;
+                index.promedio(acum_promedio, cant_item);
                 return item;
             }
         });
-        $("#animales").html('');
-        console.log(mascotas_filtradas);
-        if (mascotas_filtradas.length > 0) {
-            mascotas_filtradas.forEach(function (item, indice) {
-                document.getElementById('animales').innerHTML += '<tr><td class="item_id">' + item._id + '</td><td class="item_nombre">' + item._nombre + '</td><td class="item_edad">' + item._edad + '</td><td class="item_patas">' + item._cantidad_patas + '</td><td class="item_tipo">' + tipos[item._tipo] + '</td><td class="item_acciones"><button type="button" class="borrar btn btn-danger" onclick="index.borrar(' + indice + ')">Borrar</button><button id="modificar" class="btn btn-danger" type="button" onclick="index.modificar(' + indice + ')">Modificar</button></td></tr>';
+        $("#personas").html('');
+        if (empleados_filtradas.length > 0) {
+            empleados_filtradas.forEach(function (item, indice) {
+                document.getElementById('personas').innerHTML += '<tr><td class="item_id">' + item._id + '</td><td class="item_nombre">' + item._nombre + '</td><td class="item_edad">' + item._edad + '</td><td class="item_dni">' + item._dni + '</td><td class="item_puesto">' + puestos[item._puesto] + '</td><td class="item_acciones"><button type="button" class="borrar btn btn-danger" onclick="index.borrar(' + indice + ')">Borrar</button><button id="modificar" class="btn btn-danger" type="button" onclick="index.modificar(' + indice + ')">Modificar</button></td></tr>';
             }, this);
         }
         else {
-            document.getElementById('animales').innerHTML += '<div class="col-lg-12 col-md-12 not-found"><p>No hubo coincidencia!</p><img src="sad_icon.png" alt="not found"></div>';
+            document.getElementById('personas').innerHTML += '<div class="col-lg-12 col-md-12 not-found"><p>No hubo coincidencia!</p><img src="sad_icon.png" alt="not found"></div>';
+        }
+    }
+    static promedio(acum, cont) {
+        let promedio = acum / cont;
+        $("#promedios").val(promedio + ' años.');
+    }
+    static ocultarId() {
+        if ($("#check_id").prop("checked")) {
+            $("#head_id").css("display", "none");
+            $(".item_id").css("display", "none");
+        }
+        else {
+            $("#head_id").css("display", "table-cell");
+            $(".item_id").css("display", "table-cell");
+        }
+    }
+    static ocultarNombre() {
+        if ($("#check_nombre").prop("checked")) {
+            $("#head_nombre").css("display", "none");
+            $(".item_nombre").css("display", "none");
+        }
+        else {
+            $("#head_nombre").css("display", "table-cell");
+            $(".item_nombre").css("display", "table-cell");
+        }
+    }
+    static ocultarEdad() {
+        if ($("#check_edad").prop("checked")) {
+            $("#head_edad").css("display", "none");
+            $(".item_edad").css("display", "none");
+        }
+        else {
+            $("#head_edad").css("display", "table-cell");
+            $(".item_edad").css("display", "table-cell");
+        }
+    }
+    static ocultarTipo() {
+        if ($("#check_tipo").prop("checked")) {
+            $("#head_tipo").css("display", "none");
+            $(".item_tipo").css("display", "none");
+        }
+        else {
+            $("#head_tipo").css("display", "table-cell");
+            $(".item_tipo").css("display", "table-cell");
+        }
+    }
+    static ocultarPatas() {
+        if ($("#check_patas").prop("checked")) {
+            $("#head_patas").css("display", "none");
+            $(".item_patas").css("display", "none");
+        }
+        else {
+            $("#head_patas").css("display", "table-cell");
+            $(".item_patas").css("display", "table-cell");
+        }
+    }
+    static ocultarAcciones() {
+        if ($("#check_acciones").prop("checked")) {
+            $("#head_acciones").css("display", "none");
+            $(".item_acciones").css("display", "none");
+        }
+        else {
+            $("#head_acciones").css("display", "table-cell");
+            $(".item_acciones").css("display", "table-cell");
         }
     }
 }

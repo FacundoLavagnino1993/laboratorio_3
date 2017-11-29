@@ -12,7 +12,7 @@
 </head>
 <body>
     <div class="box-ctn-title">
-        <span>Central de animales</span>
+        <span>Central de Empleados</span>
     </div>
     <div class="container-fluid">
         <div class="row">
@@ -31,26 +31,24 @@
                             <input type="number" id="edad" class="form-control" placeholder="Edad">
                     </div>
                     <div class="col-lg-6 col-md-6 inputs">
-                            <span>Tipo</span>
-                            <select class="form-control" id="tipoMascota">
+                            <span>Puesto</span>
+                            <select class="form-control" id="puestoEmpleado">
                                 <optgroup>
-                                    <option value="0">perro</option>
-                                    <option value="1">gato</option>
-                                    <option value="2">reptil</option>
-                                    <option value="3">roedor</option>
-                                    <option value="4">ave</option>
-                                    <option value="5">pez</option>
+                                    <option value="0">desarrollador_front</option>
+                                    <option value="1">desarrollador_back</option>
+                                    <option value="2">analista</option>
+                                    <option value="3">QA</option>
+                                    <option value="4">team</option>
+                                    <option value="5">diseñador</option>
                                 </optgroup>
                             </select>
                     </div>
                     <div class="col-lg-6 col-md-6 inputs">
-                        <span>Cantidad de patas</span>
-                        <select class="form-control"id="patas">
-                            <optgroup>
-                                <option>2</option>
-                                <option>4</option>
-                            </optgroup>
-                        </select>
+                        <span>DNI</span>
+                        <input type="number" id="dni" class="form-control" placeholder="dni">
+                    </div>
+                    <div>
+                         <input name="file-input" id="file-input" type="file" />
                     </div>
                     <div class="col-lg-12 col-md-12 inputs">
                             <button type="button" class="btn btn-danger" id="btn-add" onclick="index.agregar()">Agregar</button>
@@ -62,14 +60,14 @@
                 <div class="col-lg-12 col-md-12">
                     <div class="col-lg-6 col-md-6 filtro-prom">
                         <span>Filtrar</span>
-                        <select id="filtroMascota" class="form-control" onchange="index.filtrar()">
+                        <select id="filtroEmpleado" class="form-control" onchange="index.filtrar()">
                                 <optgroup>
-                                    <option value="0">perro</option>
-                                    <option value="1">gato</option>
-                                    <option value="2">reptil</option>
-                                    <option value="3">roedor</option>
-                                    <option value="4">ave</option>
-                                    <option value="5">pez</option>
+                                    <option value="0">desarrollador_front</option>
+                                    <option value="1">desarrollador_back</option>
+                                    <option value="2">analista</option>
+                                    <option value="3">QA</option>
+                                    <option value="4">team</option>
+                                    <option value="5">diseñador</option>
                                     <option selected value="6">Ninguno</option>
                                 </optgroup>
                         </select>
@@ -79,47 +77,44 @@
                         <input type="text" class="form-control" id="promedios" placeholder="Promedio del tipo filtrado" readonly>
                     </div>
                 </div>
-                <div class="col-lg-12 col-md-12">
-                    <span>Ocultar</span>
+                <div class="col-lg-12 col-md-12 check-hidden">
+                    <div>
+                        <span>Ocultar</span>
+                    </div>
                     <div class="checkbox">
                         <div class="col-lg-2 col-md-2 check">
-                            <span>Id</span>
-                            <input type="checkbox" id="check_id" value="" onclick="index.ocultarId()">
+                            <input type="checkbox" id="check_id" value="" onclick="index.ocultarId()"> Id 
                         </div>
                         <div class="col-lg-2 col-md-2 check">
-                            <span>Nombre</span>
-                            <input type="checkbox" id="check_nombre" value="" onclick="index.ocultarNombre()">
+                            <input type="checkbox" id="check_nombre" value="" onclick="index.ocultarNombre()"> Nombre
                         </div>
                         <div class="col-lg-2 col-md-2 check">
-                            <span>Edad</span>
-                            <input type="checkbox" id="check_edad" value="" onclick="index.ocultarEdad()">
+                            <input type="checkbox" id="check_edad" value="" onclick="index.ocultarEdad()"> Edad
                         </div>
                         <div class="col-lg-2 col-md-2 check">
-                            <span>Patas</span>
-                            <input type="checkbox" id="check_patas" value="" onclick="index.ocultarPatas()">
+                            <input type="checkbox" id="check_patas" value="" onclick="index.ocultarPatas()"> DNI
+                        </div>
+                        <div class="col-lg-2 col-md-2 check">                     
+                            <input type="checkbox" id="check_tipo" value="" onclick="index.ocultarTipo()"> Puesto
                         </div>
                         <div class="col-lg-2 col-md-2 check">
-                            <span>tipo</span>
-                            <input type="checkbox" id="check_tipo" value="" onclick="index.ocultarTipo()">
-                        </div>
-                        <div class="col-lg-2 col-md-2 check">
-                            <span>Acciones</span>
-                            <input type="checkbox" id="check_acciones" value="" onclick="index.ocultarAcciones()">
+                            <input type="checkbox" id="check_acciones" value="" onclick="index.ocultarAcciones()"> Acciones
                         </div>
                     </div>
                 </div>
                 <table class="col-lg-12 col-md-12 table table-striped table-ctn">
                     <thead>
                         <tr>
-                            <th id="head_id" class="col-lg-2 col-md-2">Id</th>
+                            <th id="head_foto" class="col-lg-2 col-md-2">Foto</th>
+                            <th id="head_id" class="col-lg-1 col-md-1">Id</th>
                             <th id="head_nombre" class="col-lg-2 col-md-2">Nombre</th>
-                            <th id="head_edad" class="col-lg-2 col-md-2">Edad</th>
-                            <th id="head_patas" class="col-lg-1 col-md-1">Patas</th>
-                            <th id="head_tipo" class="col-lg-2 col-md-2">tipo</th>
+                            <th id="head_edad" class="col-lg-1 col-md-1">Edad</th>
+                            <th id="head_patas" class="col-lg-1 col-md-1">DNI</th>
+                            <th id="head_tipo" class="col-lg-2 col-md-2">Puesto</th>
                             <th id="head_acciones" class="col-lg-3 col-md-3">Acciones</th>
                         </tr>
                     </thead>
-                    <tbody id="animales">
+                    <tbody id="personas">
                     </tbody>
                 </table>
             </div>
