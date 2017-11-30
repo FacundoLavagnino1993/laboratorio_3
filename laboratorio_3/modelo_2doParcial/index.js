@@ -12,10 +12,11 @@ var clases;
 var clases;
 (function (clases) {
     class empleado extends clases.persona {
-        constructor(nombre, edad, dni, id, puesto) {
+        constructor(nombre, edad, dni, id, puesto, foto) {
             super(nombre, edad, dni);
             this._id = id;
             this._puesto = puesto;
+            this._foto = foto;
         }
         ;
     }
@@ -37,25 +38,7 @@ var clases;
 /// <reference path="empleados.ts"/>
 /// <reference path="enum.ts"/>
 $(document).ready(function () {
-    //index.onInit();
     // index.renderTable();
-    $(function () {
-        $('#file-input').change(function (e) {
-            addImage(e);
-        });
-        function addImage(e) {
-            var file = e.target.files[0], imageType = /image.*/;
-            if (!file.type.match(imageType))
-                return;
-            var reader = new FileReader();
-            reader.onload = fileOnload;
-            reader.readAsDataURL(file);
-        }
-        function fileOnload(e) {
-            var result = e.target.result;
-            $('#imgSalida').attr("src", result);
-        }
-    });
     document.getElementById("btn-mod").style.display = "none";
 });
 let empleadoStorage = localStorage;
@@ -63,25 +46,37 @@ let empleados = new Array();
 let data = [];
 let puestos = clases.puesto;
 let id_update;
+let imgBase64;
+(function () {
+    let input = document.querySelector('#foto');
+    input.addEventListener('click', function (e) {
+        let archivo = input.files[0];
+        let reader = new FileReader();
+        let urlBase64;
+        reader.onload = function () {
+            urlBase64 = reader.result;
+        };
+        console.log(urlBase64);
+        reader.readAsDataURL(archivo);
+    }, false);
+});
 class index {
-    static onInit() {
-        empleadoStorage.setItem('empleados', JSON.stringify(empleados));
-        data = JSON.parse(empleadoStorage.getItem('empleados') || '[]');
-    }
     static renderTable() {
         data = JSON.parse(empleadoStorage.getItem('empleados') || '[]');
         $("#personas").html('');
         data.forEach(function (item, indice) {
-            document.getElementById('personas').innerHTML += '<tr><td><img id="imgSalida" width="25%" height="25%" src="" /></td><td class="item_id">' + item._id + '</td><td class="item_nombre">' + item._nombre + '</td><td class="item_edad">' + item._edad + '</td><td class="item_dni">' + item._dni + '</td><td class="item_tipo">' + puestos[item._puesto] + '</td><td class="item_acciones"><button type="button" class="borrar btn btn-danger" onclick="index.borrar(' + indice + ')">Borrar</button><button id="modificar" type="button" class="btn btn-danger" onclick="index.modificar(' + indice + ')">Modificar</button></td></tr>';
+            document.getElementById('personas').innerHTML += '<tr><td><img id="imgSalida" width="25%" height="25%" src=' + item._foto + ' /></td><td class="item_id">' + item._id + '</td><td class="item_nombre">' + item._nombre + '</td><td class="item_edad">' + item._edad + '</td><td class="item_dni">' + item._dni + '</td><td class="item_tipo">' + puestos[item._puesto] + '</td><td class="item_acciones"><button type="button" class="borrar btn btn-danger" onclick="index.borrar(' + indice + ')">Borrar</button><button id="modificar" type="button" class="btn btn-danger" onclick="index.modificar(' + indice + ')">Modificar</button></td></tr>';
         }, this);
     }
     static agregar() {
+        console.log(imgBase64);
+        let foto = imgBase64;
         let id = Number($("#id").val());
         let nombre = String($("#nombre").val());
         let edad = Number($("#edad").val());
         let puesto = ($("#puestoEmpleado").val());
         let dni = Number($("#dni").val());
-        let add_empleado = new clases.empleado(nombre, edad, dni, id, puesto);
+        let add_empleado = new clases.empleado(nombre, edad, dni, id, puesto, foto);
         empleados.push(add_empleado);
         empleadoStorage.setItem('empleados', JSON.stringify(empleados));
         index.renderTable();
@@ -221,6 +216,29 @@ class index {
         else {
             $("#head_acciones").css("display", "table-cell");
             $(".item_acciones").css("display", "table-cell");
+        }
+    }
+    /*    private static convertBase64(img){
+            console.log(img);
+            var canvas = document.createElement("canvas");
+            
+            canvas.width = img.width;
+            canvas.height = img.height;
+            console.log(canvas);
+           // var ctx = canvas.getContext("2d");
+           // ctx.drawImage(img, 0, 0);
+        
+            var dataURL = canvas.toDataURL("image/png");
+        
+            return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+        }*/
+    static salvarImagen(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                imgBase64 = e.target.result;
+            };
+            reader.readAsDataURL(input.files[0]);
         }
     }
 }
