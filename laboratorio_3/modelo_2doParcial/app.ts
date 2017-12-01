@@ -25,7 +25,6 @@ let imgBase64;
         reader.onload = function(){
             urlBase64 = reader.result;
         };
-        console.log(urlBase64);
         reader.readAsDataURL(archivo)
     },false);
 });
@@ -36,12 +35,12 @@ class index{
         data = JSON.parse(empleadoStorage.getItem('empleados') || '[]');
         $("#personas").html('');
         data.forEach(function(item, indice) {
-            document.getElementById('personas').innerHTML += '<tr><td><img id="imgSalida" width="25%" height="25%" src='+item._foto+' /></td><td class="item_id">'+item._id+'</td><td class="item_nombre">'+item._nombre+'</td><td class="item_edad">'+item._edad+'</td><td class="item_dni">'+item._dni+'</td><td class="item_tipo">'+puestos[item._puesto]+'</td><td class="item_acciones"><button type="button" class="borrar btn btn-danger" onclick="index.borrar('+indice+')">Borrar</button><button id="modificar" type="button" class="btn btn-danger" onclick="index.modificar('+indice+')">Modificar</button></td></tr>';
+            document.getElementById('personas').innerHTML += '<tr><td><img id="imgSalida" width="25%" height="25%" class="item_foto" src='+item._foto+' /></td><td class="item_id">'+item._id+'</td><td class="item_nombre">'+item._nombre+'</td><td class="item_edad">'+item._edad+'</td><td class="item_dni">'+item._dni+'</td><td class="item_puesto">'+puestos[item._puesto]+'</td><td class="item_acciones"><button type="button" class="borrar btn btn-danger" onclick="index.borrar('+indice+')">Borrar</button><button id="modificar" type="button" class="btn btn-danger" onclick="index.modificar('+indice+')">Modificar</button></td></tr>';
         }, this); 
+        index.limpiar();
     }
 
     public static agregar(){
-        console.log(imgBase64);
         let foto = imgBase64;
         let id = Number($("#id").val());
         let nombre = String($("#nombre").val());
@@ -85,9 +84,10 @@ class index{
         let edad = Number($("#edad").val());
         let puesto = <clases.puesto>($("#puestoEmpleado").val());
         let dni = Number($("#dni").val());
-        
+        let foto = imgBase64;
         for(let i = 0; i < empleados.length; i++){
             if(i == id_update){
+                empleados[i]._foto = foto;
                 empleados[i]._id = id;
                 empleados[i]._nombre = nombre;
                 empleados[i]._edad = edad;
@@ -120,7 +120,7 @@ class index{
         $("#personas").html('');
         if(empleados_filtradas.length > 0){
             empleados_filtradas.forEach(function(item, indice) {
-                document.getElementById('personas').innerHTML += '<tr><td><img id="imgSalida" width="25%" height="25%" src='+item._foto+' /></td><td class="item_id">'+item._id+'</td><td class="item_nombre">'+item._nombre+'</td><td class="item_edad">'+item._edad+'</td><td class="item_dni">'+item._dni+'</td><td class="item_puesto">'+puestos[item._puesto]+'</td><td class="item_acciones"><button type="button" class="borrar btn btn-danger" onclick="index.borrar('+indice+')">Borrar</button><button id="modificar" class="btn btn-danger" type="button" onclick="index.modificar('+indice+')">Modificar</button></td></tr>';
+                document.getElementById('personas').innerHTML += '<tr><td><img id="imgSalida" class="item_foto" width="25%" height="25%" src='+item._foto+' /></td><td class="item_id">'+item._id+'</td><td class="item_nombre">'+item._nombre+'</td><td class="item_edad">'+item._edad+'</td><td class="item_dni">'+item._dni+'</td><td class="item_puesto">'+puestos[item._puesto]+'</td><td class="item_acciones"><button type="button" class="borrar btn btn-danger" onclick="index.borrar('+indice+')">Borrar</button><button id="modificar" class="btn btn-danger" type="button" onclick="index.modificar('+indice+')">Modificar</button></td></tr>';
             }, this); 
         }else{
             document.getElementById('personas').innerHTML += '<div class="col-lg-12 col-md-12 not-found"><p>No hubo coincidencia!</p><img src="sad_icon.png" alt="not found"></div>'
@@ -130,6 +130,15 @@ class index{
     private static promedio(acum,cont){
         let promedio = acum / cont;
         $("#promedios").val(promedio + ' años.');
+    }
+    public static ocultarFoto(){
+        if($("#check_foto").prop("checked")){
+            $("#head_foto").css("display","none");
+            $(".item_foto").css("display","none");
+        }else{
+            $("#head_foto").css("display","table-cell");
+            $(".item_foto").css("display","table-cell");
+        }
     }
     public static ocultarId(){
         if($("#check_id").prop("checked")){
@@ -158,22 +167,22 @@ class index{
             $(".item_edad").css("display","table-cell");
         }
     }
-    public static ocultarTipo(){
+    public static ocultarPuesto(){
         if($("#check_tipo").prop("checked")){
-            $("#head_tipo").css("display","none");
-            $(".item_tipo").css("display","none");
+            $("#head_puesto").css("display","none");
+            $(".item_puesto").css("display","none");
         }else{
-            $("#head_tipo").css("display","table-cell");
-            $(".item_tipo").css("display","table-cell");
+            $("#head_puesto").css("display","table-cell");
+            $(".item_puesto").css("display","table-cell");
         }
     }
-    public static ocultarPatas(){
+    public static ocultarDni(){
         if($("#check_patas").prop("checked")){
-            $("#head_patas").css("display","none");
-            $(".item_patas").css("display","none");
+            $("#head_dni").css("display","none");
+            $(".item_dni").css("display","none");
         }else{
-            $("#head_patas").css("display","table-cell");
-            $(".item_patas").css("display","table-cell");
+            $("#head_dni").css("display","table-cell");
+            $(".item_dni").css("display","table-cell");
         }
     }
     public static ocultarAcciones(){
@@ -204,17 +213,20 @@ class index{
     private static salvarImagen(input){
         if (input.files && input.files[0]) {
             var reader = new FileReader();
-    
             reader.onload = function (e) {
-                imgBase64 = e.target.result;
-                
+                imgBase64 = e.target.result;   
             }
-    
             reader.readAsDataURL(input.files[0]);
         }
     }
-       
-      
+
+    private static limpiar(){
+        String($("#nombre").val(''));
+        Number($("#id").val(''));
+        Number($("#edad").val(''));
+        ($("#puestoEmpleado").val(''));
+        Number($("#dni").val(''));
+    }      
            
         
 }
